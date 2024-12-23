@@ -18,6 +18,8 @@ static void test_timespec(void){
     printf("%f ms\n",timespec_milliseconds(&t2));
 }
 
+
+
 void timer_callback(const char *s){
     puts(s);
 }
@@ -34,7 +36,10 @@ static void test_timer(void){
     timer_close(&t);
 }
 
+
+
 int main(int argc, char **argv){
+    test_timespec();
     test_timer();
     return 0;
 }
