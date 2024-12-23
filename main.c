@@ -8,7 +8,7 @@
 
 static void test_timespec(void){
     struct timespec n={10,0};
-    struct timespec t1;
+    struct timespec t1,t2;
 
     timespec_current(&t1);
     while(nanosleep(&n,&n));
