@@ -58,6 +58,7 @@ static void test_localtime(void){
 }
 
 static void test_datetime(void){
+    char tmp[64];
     struct timespec t;
     struct datetime d[1];
     
@@ -66,9 +67,10 @@ static void test_datetime(void){
         while(i--)
             datetime_from_epoch(d,time(NULL));
     );
-    
-    printf("datetime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
-    d->day,d->month,d->year,d->hour,d->minute,d->second,d->day_w,d->day_y);
+
+    printf("datetime %f ms: %s\n",timespec_milliseconds(&t),datetime_string(d,"D.M.Y / h:m:s / w / y",tmp,sizeof(tmp)));
+    /*printf("datetime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
+    d->day,d->month,d->year,d->hour,d->minute,d->second,d->day_w,d->day_y);*/
 }
 
 
