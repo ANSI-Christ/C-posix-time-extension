@@ -48,11 +48,11 @@ static void test_localtime(void){
         unsigned int i=1000000;
         while(i--){
             x=time(NULL);
-            d=localtime(&x);
+            d=gmtime(&x);
         }
     );
     
-    printf("localtime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
+    printf("gmtime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
     d->tm_mday,d->tm_mon,d->tm_year,d->tm_hour,d->tm_min,d->tm_sec,d->tm_wday,d->tm_yday);
     
 }
