@@ -7,7 +7,7 @@
 
 
 static void test_timespec(void){
-    struct timespec n={10,0};
+    struct timespec n={3,300000000};
     struct timespec t1,t2;
 
     timespec_current(&t1);
@@ -38,22 +38,19 @@ static void test_timer(void){
 
 
 
-
-static void test_localtime(void){
+static void test_gmtime(void){
     struct timespec t;
     struct tm *d;
-    time_t x;
+    time_t x=time(NULL)+3600*3+3600*24*0;
     
     timespec_runtime(&t,
         unsigned int i=1000000;
-        while(i--){
-            x=time(NULL);
+        while(i--)
             d=gmtime(&x);
-        }
     );
     
     printf("gmtime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
-    d->tm_mday,d->tm_mon,d->tm_year,d->tm_hour,d->tm_min,d->tm_sec,d->tm_wday,d->tm_yday);
+    d->tm_mday,d->tm_mon+1,d->tm_year+1900,d->tm_hour,d->tm_min,d->tm_sec,d->tm_wday,d->tm_yday+1);
     
 }
 
@@ -61,22 +58,22 @@ static void test_datetime(void){
     char tmp[64];
     struct timespec t;
     struct datetime d[1];
+    time_t x=time(NULL)+3600*3+3600*24*0;
     
     timespec_runtime(&t,
         unsigned int i=1000000;
         while(i--)
-            datetime_from_epoch(d,time(NULL));
+            datetime_from_epoch(d,x);
     );
 
-    printf("datetime %f ms: %s\n",timespec_milliseconds(&t),datetime_string(d,"D.M.Y / h:m:s / w / y",tmp,sizeof(tmp)));
-    /*printf("datetime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
-    d->day,d->month,d->year,d->hour,d->minute,d->second,d->day_w,d->day_y);*/
+    printf("dttime %f ms: %s\n",timespec_milliseconds(&t),datetime_string(d,"D.M.Y / h:m:s / w / y",tmp,sizeof(tmp)));
 }
+
 
 
 int main(int argc, char **argv){
     test_timespec();
-    test_localtime();
+    test_gmtime();
     test_datetime();
     test_timer();
     return 0;
