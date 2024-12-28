@@ -5,7 +5,6 @@
 
 
 
-
 static void test_timespec(void){
     struct timespec n={3,300000000};
     struct timespec t1,t2;
@@ -42,16 +41,16 @@ static void test_gmtime(void){
     struct timespec t;
     struct tm *d;
     time_t x=time(NULL)+3600*3+3600*24*0;
-    
+
     timespec_runtime(&t,
         unsigned int i=1000000;
         while(i--)
             d=gmtime(&x);
     );
-    
+
     printf("gmtime %f ms: %d.%d.%d / %d:%d:%d / %d / %d\n",timespec_milliseconds(&t),
     d->tm_mday,d->tm_mon+1,d->tm_year+1900,d->tm_hour,d->tm_min,d->tm_sec,d->tm_wday,d->tm_yday+1);
-    
+
 }
 
 static void test_datetime(void){
@@ -59,7 +58,7 @@ static void test_datetime(void){
     struct timespec t;
     struct datetime d[1];
     time_t x=time(NULL)+3600*3+3600*24*0;
-    
+
     timespec_runtime(&t,
         unsigned int i=1000000;
         while(i--)
