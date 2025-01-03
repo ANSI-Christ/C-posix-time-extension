@@ -6,11 +6,10 @@
 
 
 static void test_timespec(void){
-    struct timespec n={3,300000000};
     struct timespec t1,t2;
 
     timespec_current(&t1);
-    while(nanosleep(&n,&n));
+    sleepf(3.3);
     timespec_current(&t2);
 
     timespec_change(&t2,-t1.tv_sec,-t1.tv_nsec);
@@ -24,13 +23,12 @@ void timer_callback(const char *s){
 }
 
 static void test_timer(void){
-    struct timespec n={10,0};
     struct timer t;
 
     timer_init(&t,timer_callback,"timer");
     timer_start(&t,2000,500,NULL,NULL);
 
-    while(nanosleep(&n,&n));
+    sleepf(10);
 
     timer_close(&t);
 }
