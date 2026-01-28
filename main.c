@@ -18,19 +18,36 @@ static void test_timespec(void){
 
 
 
-void timer_callback(const char *s){
+static int timer_callback_1(const char * const s,struct timespec * const t){
     puts(s);
+    timespec_change(t,0,500*1000*1000);
+    return 1;
+}
+
+static int timer_callback_2(const char * const s,struct timespec * const t){
+    puts(s);
+    return 0;
+}
+
+static void my_timer_start(struct timer * const t,const unsigned int delay_ms,void * const f,void * const arg){
+    struct timespec x[1];
+    timer_init(t,f,arg);
+    timespec_current(x);
+    timespec_change(x,delay_ms/1000,delay_ms%1000);
+    timer_start(t,x,NULL,NULL);
 }
 
 static void test_timer(void){
-    struct timer t;
+    struct timer t[2];
 
-    timer_init(&t,timer_callback,"timer");
-    timer_start(&t,2000,500,NULL,NULL);
+    my_timer_start(t+0,2000,timer_callback_1,"periodic timer 0.5 sec with delay 2 sec");
+    my_timer_start(t+1,5000,timer_callback_2,"single shot timer 5 sec");
 
     sleepf(10);
 
-    timer_close(&t);
+    timer_close(t+0);
+    timer_close(t+1);
+    sleepf(0.1);
 }
 
 
