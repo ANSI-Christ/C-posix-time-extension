@@ -32,8 +32,7 @@ static int timer_callback_2(const char * const s,struct timespec * const t){
 static void my_timer_start(struct timer * const t,const unsigned int delay_ms,void * const f,void * const arg){
     struct timespec x[1];
     timer_init(t,f,arg);
-    timespec_current(x);
-    timespec_change(x,delay_ms/1000,delay_ms%1000);
+    timespec_future(x,delay_ms/1000,delay_ms%1000);
     timer_start(t,x,NULL,NULL);
 }
 
